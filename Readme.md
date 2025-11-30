@@ -168,7 +168,6 @@ Pastikan folder public/images/ berisi file berikut agar tampilan maksimal:
 * hospital-bg.jpg (Background Login/Home)
 * hero-bg.jpg (Background Dashboard)
 * logo.png (Logo Aplikasi)
-* default-user.png (Avatar Default)
 
 © License
 
