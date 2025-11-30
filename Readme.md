@@ -55,20 +55,19 @@ Buka terminal (Git Bash/CMD), lalu jalankan:
 git clone https://github.com/USERNAME_GITHUB/NAMA_REPO.git
 cd NAMA_REPO
 ```
+### 2. Konfigurasi Environment
 
-### 2. Install Dependencies
+Duplikat file .env.example menjadi .env:
+```bash
+cp .env.example .env
+```
+
+### 3. Install Dependencies
 
 Install library PHP dan JavaScript yang dibutuhkan:
 ```bash
 composer install
 npm install
-```
-
-### 3. Konfigurasi Environment
-
-Duplikat file .env.example menjadi .env:
-```bash
-cp .env.example .env
 ```
 
 Buka file .env dan sesuaikan konfigurasi database:
