@@ -55,19 +55,12 @@ Buka terminal (Git Bash/CMD), lalu jalankan:
 git clone https://github.com/USERNAME_GITHUB/NAMA_REPO.git
 cd NAMA_REPO
 ```
+
 ### 2. Konfigurasi Environment
 
 Duplikat file .env.example menjadi .env:
 ```bash
 cp .env.example .env
-```
-
-### 3. Install Dependencies
-
-Install library PHP dan JavaScript yang dibutuhkan:
-```bash
-composer install
-npm install
 ```
 
 Buka file .env dan sesuaikan konfigurasi database:
@@ -78,6 +71,14 @@ DB_PORT=3306
 DB_DATABASE=rs_digital  <-- Sesuaikan dengan nama database Anda
 DB_USERNAME=root
 DB_PASSWORD=
+```
+
+### 3. Install Dependencies
+
+Install library PHP dan JavaScript yang dibutuhkan:
+```bash
+composer install
+npm install
 ```
 
 ### 4. Generate Key & Link Storage
