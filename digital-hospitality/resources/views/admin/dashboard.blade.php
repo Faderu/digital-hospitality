@@ -9,7 +9,7 @@
 @section('content')
 <div class="space-y-8">
     
-    <div class="rounded-2xl p-8 text-white shadow-xl relative overflow-hidden" 
+    <div class="rounded-2xl p-8 text-white shadow-xl relative overflow-hidden mb-10" 
         style="background-image: url('{{ asset('images/hero-bg.jpg') }}'); background-size: cover; background-position: center;">
         
         <div class="absolute inset-0 bg-teal-900 opacity-75 z-0"></div>
