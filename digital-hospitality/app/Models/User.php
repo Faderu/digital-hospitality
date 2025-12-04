@@ -45,7 +45,6 @@ class User extends Authenticatable
         return $this->hasMany(Feedback::class, 'patient_id');
     }
 
-    // Helper untuk check role
     public function isAdmin() { return $this->role === 'admin'; }
     public function isDoctor() { return $this->role === 'doctor'; }
     public function isPatient() { return $this->role === 'patient'; }

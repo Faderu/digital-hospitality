@@ -14,7 +14,6 @@ class ReportController extends Controller
 {
     public function index()
     {
-        // FIX: Join langsung ke Polis melalui appointment.poli_id agar data historis akurat
         $patientsPerPoli = Appointment::select('polis.name', DB::raw('count(distinct patient_id) as patient_count'))
             ->join('polis', 'appointments.poli_id', '=', 'polis.id')
             ->groupBy('polis.id', 'polis.name')

@@ -26,7 +26,6 @@ class ScheduleController extends Controller
             'duration_minutes' => 'required|integer|min:30',
         ]);
 
-        // Check for overlap
         $overlapping = Schedule::where('doctor_id', auth()->id())
             ->where('day', $validated['day'])
             ->where(function ($query) use ($validated) {

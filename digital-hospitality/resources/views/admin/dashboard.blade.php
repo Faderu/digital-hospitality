@@ -10,7 +10,7 @@
 <div class="space-y-8">
     
     <div class="rounded-2xl p-8 text-white shadow-xl relative overflow-hidden mb-10" 
-        style="background-image: url('{{ asset('images/hero-bg.jpg') }}'); background-size: cover; background-position: center;">
+         style="background-image: url('{{ asset('images/hero-bg.jpg') }}'); background-size: cover; background-position: center;">
         
         <div class="absolute inset-0 bg-teal-900 opacity-75 z-0"></div>
 
@@ -18,7 +18,6 @@
             <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Selamat Datang, Administrator!</h1>
             <p class="mt-4 text-teal-100 text-lg">Berikut adalah ringkasan aktivitas operasional rumah sakit hari ini.</p>
         </div>
-    </div>
         <div class="absolute right-0 top-0 h-full w-1/2 bg-white opacity-5 transform skew-x-12"></div>
         <div class="absolute -bottom-16 -right-16 w-64 h-64 bg-teal-400 opacity-20 rounded-full blur-3xl"></div>
     </div>
@@ -27,9 +26,10 @@
         <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-yellow-400 flex items-center justify-between hover:shadow-lg transition duration-300">
             <div>
                 <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Janji Temu Pending</p>
-                <p class="text-3xl font-bold text-gray-800 mt-2">
+                
+                <a href="{{ route('appointments.index', ['status' => 'pending']) }}" class="text-3xl font-bold text-gray-800 mt-2 hover:text-yellow-600 hover:underline transition" title="Klik untuk verifikasi">
                     {{ \App\Models\Appointment::where('status', 'pending')->count() }}
-                </p>
+                </a>
             </div>
             <div class="p-4 bg-yellow-50 rounded-full text-yellow-500">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

@@ -11,7 +11,14 @@
     <div class="p-6 bg-white border-b border-gray-200">
         
         <div class="flex justify-between items-center mb-6">
-            <h3 class="text-lg font-medium text-teal-700">Riwayat & Antrian</h3>
+            <div>
+                <h3 class="text-lg font-medium text-teal-700">Riwayat & Antrian</h3>
+                @if(request('status'))
+                    <span class="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">Filter: {{ ucfirst(request('status')) }}</span>
+                    <a href="{{ route('appointments.index') }}" class="text-xs text-red-500 hover:underline ml-2">(Reset)</a>
+                @endif
+            </div>
+
             @if(auth()->user()->isPatient())
             <a href="{{ route('appointments.create') }}" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -89,26 +96,32 @@
                                     </form>
                                 @endif
 
-                                {{-- ACTION: ADMIN/DOCTOR (Approve/Reject) --}}
+                                {{-- ACTION: ADMIN & DOKTER (Approve/Reject Logic Baru) --}}
                                 @if($appointment->status == 'pending' && (auth()->user()->isAdmin() || (auth()->user()->isDoctor() && $appointment->doctor_id == auth()->id())))
+                                    
+                                    {{-- Tombol Approve --}}
                                     <form action="{{ route('appointments.approve', $appointment) }}" method="POST" class="inline">
                                         @csrf
-                                        <button type="submit" class="text-green-600 hover:text-green-900 bg-green-50 p-2 rounded-full hover:bg-green-100" title="Terima">
+                                        <button type="submit" class="text-green-600 hover:text-green-900 bg-green-50 p-2 rounded-full hover:bg-green-100 transition shadow-sm" title="Setujui Janji Temu">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         </button>
                                     </form>
-                                    <form action="{{ route('appointments.reject', $appointment) }}" method="POST" class="flex items-center">
+
+                                    {{-- Tombol Reject (Inline Form) --}}
+                                    <form action="{{ route('appointments.reject', $appointment) }}" method="POST" class="flex items-center ml-1">
                                         @csrf
-                                        <input type="text" name="rejection_reason" placeholder="Alasan..." required class="text-xs border-gray-300 rounded-l-md w-20 focus:ring-red-500 focus:border-red-500">
-                                        <button type="submit" class="bg-red-600 text-white p-1.5 rounded-r-md hover:bg-red-700 text-xs" title="Tolak">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                                        </button>
+                                        <div class="flex items-center">
+                                            <input type="text" name="rejection_reason" placeholder="Alasan tolak..." required class="text-xs border-gray-300 rounded-l-md w-24 h-8 px-2 focus:ring-red-500 focus:border-red-500">
+                                            <button type="submit" class="bg-red-500 text-white h-8 px-2 rounded-r-md hover:bg-red-600 transition shadow-sm" title="Tolak">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                            </button>
+                                        </div>
                                     </form>
                                 @endif
 
                                 {{-- ACTION: DOCTOR (Create Medical Record if Approved) --}}
                                 @if($appointment->status == 'approved' && auth()->user()->isDoctor() && $appointment->doctor_id == auth()->id())
-                                    <a href="{{ route('medical-records.create', $appointment) }}" class="text-purple-600 hover:text-purple-900 bg-purple-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-purple-100 flex items-center">
+                                    <a href="{{ route('medical-records.create', $appointment) }}" class="text-purple-600 hover:text-purple-900 bg-purple-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-purple-100 flex items-center border border-purple-200">
                                         + Periksa
                                     </a>
                                 @endif
@@ -117,7 +130,9 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-8 text-center text-gray-500">Belum ada data janji temu.</td>
+                        <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+                            Tidak ada janji temu yang ditemukan.
+                        </td>
                     </tr>
                     @endforelse
                 </tbody>

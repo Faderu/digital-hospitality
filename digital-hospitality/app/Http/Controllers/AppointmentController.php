@@ -11,18 +11,25 @@ use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
+        
+        $query = Appointment::with(['doctor', 'patient', 'schedule', 'poli']);
+
         if ($user->isAdmin()) {
-            $appointments = Appointment::all();
+            if ($request->has('status') && $request->status != '') {
+                $query->where('status', $request->status);
+            }
         } elseif ($user->isDoctor()) {
-            $appointments = $user->appointmentsAsDoctor;
+            $query->where('doctor_id', $user->id);
         } elseif ($user->isPatient()) {
-            $appointments = $user->appointmentsAsPatient;
+            $query->where('patient_id', $user->id);
         } else {
             abort(403);
         }
+
+        $appointments = $query->latest()->get();
 
         return view('appointments.index', compact('appointments'));
     }

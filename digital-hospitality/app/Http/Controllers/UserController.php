@@ -35,15 +35,20 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
             'role' => 'required|in:admin,doctor,patient',
-            'poli_id' => 'required_if:role,doctor|exists:polis,id',
+            'poli_id' => 'required_if:role,doctor|nullable|exists:polis,id',
         ]);
 
+        if ($request->role !== 'doctor') {
+            $validated['poli_id'] = null;
+        }
+
         $validated['password'] = Hash::make($validated['password']);
+        
         User::create($validated);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully');
+        return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
     }
 
     public function show(User $user)
@@ -63,15 +68,22 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:admin,doctor,patient',
-            'poli_id' => 'required_if:role,doctor|exists:polis,id',
+            'poli_id' => 'required_if:role,doctor|nullable|exists:polis,id',
         ]);
+
+        if ($request->role !== 'doctor') {
+            $validated['poli_id'] = null;
+        }
 
         if ($request->filled('password')) {
             $validated['password'] = Hash::make($request->password);
+        } else {
+            unset($validated['password']);
         }
 
         $user->update($validated);
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        
+        return redirect()->route('users.index')->with('success', 'User berhasil diperbarui');
     }
 
     public function destroy(User $user)
