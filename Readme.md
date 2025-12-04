@@ -52,7 +52,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek di komputer lokal:
 ### 1. Clone Repository
 Buka terminal (Git Bash/CMD), lalu jalankan:
 ```bash
-git clone https://github.com/USERNAME_GITHUB/NAMA_REPO.git
+git clone https://github.com/Faderu/digital-hospitality.git
 cd digital-hospitality/digital-hospitality
 ```
 
